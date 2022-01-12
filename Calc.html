@@ -1,0 +1,334 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Calculator</title>
+<script>
+// stats.js - 更新版 v 1.77
+(function(f,e){"object"===typeof exports&&"undefined"!==typeof module?module.exports=e():"function"===typeof define&&define.amd?define(e):f.Stats=e()})(this,function(){var f=function(){function e(a){c.appendChild(a.dom);return a}function u(a){for(var d=0;d<c.children.length;d++)c.children[d].style.display=d===a?"block":"none";l=a}var l=0,c=document.createElement("div");c.style.cssText="position:fixed;top:0;left:0;cursor:pointer;opacity:0.9;z-index:10000";c.addEventListener("click",function(a){a.preventDefault();
+u(++l%c.children.length)},!1);var k=(performance||Date).now(),g=k,a=0,r=e(new f.Panel("FPS","#0055ff","#002")),h=e(new f.Panel("MS","#22ff91","#020"));if(self.performance&&self.performance.memory)var t=e(new f.Panel("MB","#ff2949","#201"));u(0);return{REVISION:16,dom:c,addPanel:e,showPanel:u,begin:function(){k=(performance||Date).now()},end:function(){a++;var c=(performance||Date).now();h.update(c-k,200);if(c>=g+1E3&&(r.update(1E3*a/(c-g),100),g=c,a=0,t)){var d=performance.memory;t.update(d.usedJSHeapSize/
+1048576,d.jsHeapSizeLimit/1048576)}return c},update:function(){k=this.end()},domElement:c,setMode:u}};f.Panel=function(e,f,l){var c=Infinity,k=0,g=Math.round,a=g(window.devicePixelRatio||1),r=80*a,h=48*a,t=3*a,v=2*a,d=3*a,m=15*a,n=74*a,p=30*a,q=document.createElement("canvas");q.width=r;q.height=h;q.style.cssText="width:80px;height:48px";var b=q.getContext("2d");b.font="bold "+9*a+"px Helvetica,Arial,sans-serif";b.textBaseline="top";b.fillStyle=l;b.fillRect(0,0,r,h);b.fillStyle=f;b.fillText(e,t,v);
+b.fillRect(d,m,n,p);b.fillStyle=l;b.globalAlpha=.9;b.fillRect(d,m,n,p);return{dom:q,update:function(h,w){c=Math.min(c,h);k=Math.max(k,h);b.fillStyle=l;b.globalAlpha=1;b.fillRect(0,0,r,m);b.fillStyle=f;b.fillText(g(h)+" "+e+" ("+g(c)+"-"+g(k)+")",t,v);b.drawImage(q,d+a,m,n-a,p,d,m,n-a,p);b.fillRect(d+n-a,m,a,p);b.fillStyle=l;b.globalAlpha=.9;b.fillRect(d+n-a,m,a,g((1-h/w)*p))}}};return f});
+
+						var stats = new Stats();
+						
+						stats.showPanel( 2 );
+						document.body.appendChild( stats.dom );
+			
+						var canvas = document.createElement( 'canvas' );
+						canvas.width = 512;
+						canvas.height = 512;
+						document.body.appendChild( canvas );
+			
+						var context = canvas.getContext( '2d' );
+						context.fillStyle = 'rgba(255, 255, 255, 0.0)';
+			
+						function animate() {
+			
+							var time = performance.now() / 1000;
+			
+							context.clearRect( 0, 0, 512, 512 );
+							
+							stats.begin();
+			
+							for ( var i = 0; i < 2000; i ++ ) {
+			
+								var x = Math.cos( time + i * 0.01 ) * 196 + 256;
+								var y = Math.sin( time + i * 0.01234 ) * 196 + 256;
+			
+								context.beginPath();
+								context.arc( x, y, 10, 0, Math.PI * 2, true );
+								context.fill();
+			
+							}
+							
+							stats.end();
+			
+							requestAnimationFrame( animate );
+			
+						}
+						
+						animate();
+						
+						</script>
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.calculator {
+    width: 400px;
+    height: 100%;
+    background-color: rgb(241, 241, 241);
+    overflow: hidden;
+    margin: 0 auto;
+    //为了美观，适当减少弯角曲率
+    border-top-left-radius: 10%;
+    border-top-right-radius: 10%;
+}
+
+.screen1 {//新增的显示屏的样式
+    height: 50px;
+    line-height: 50px;
+    margin-top: 50px;
+    font-size: 20px;
+    color: yellowgreen;
+}
+.screen2 {
+    height: 100px;
+    font-size: 50px;
+    line-height: 100px;
+    color: #000;
+    font-weight: 600;
+}
+span {
+    float: right;
+}
+
+.M {
+    margin-top: 20px;
+    height: 30px;
+}
+
+.M li {
+    width: 65px;
+    line-height: 30px;
+    list-style: none;
+    float: left;
+    text-align: center;
+    font-size: 10px;
+}
+
+.m {
+    color: rgb(192, 192, 192);
+}
+
+.m1 {
+    font-weight: 600;
+}
+
+.c1{
+transition: all 0.5s;
+}
+.c1:hover {
+    background-color: rgb(214, 212, 212);
+}
+
+.row {
+    height: 80px;
+}
+
+.row li {
+    width: 100px;
+    height: 80px;
+    line-height: 70px;
+    list-style: none;
+    float: left;
+    text-align: center;
+    border: 2px solid rgb(241, 241, 241);
+    box-sizing: border-box;
+}
+
+.u1 {
+    font-size: 20px;
+    background-color: rgb(245, 245, 245);
+}
+
+.u2 {
+    font-size: 25px;
+    font-weight: 700;
+    background-color: rgb(255, 255, 255);
+}
+
+    </style>
+</head>
+<body onselectstart="return false">
+    <div class="calculator"> 
+        <div class="screen1"><span></span></div>   
+        <div class="screen2"><span>0</span></div>
+        <div class="M">
+            <ul>
+                <li class="m">MC</li>
+                <li class="m">MR</li>
+                <li class="c1 m1">M+</li>
+                <li class="c1 m1">M-</li>
+                <li class="c1 m1">MS</li>
+            </ul>
+        </div>
+        <div class="row u1">
+            <ul>
+                <li class="c1">%</li>
+                <li class="c1">(</li>
+                <li class="c1">)</li>
+                <li class="c1">1/x</li>
+            </ul>
+        </div>
+        <div class="row u1">
+             <ul>
+                <li class="c1">CE</li>
+                <li class="c1">C</li>
+                <li class="c1">DEL</li>
+                <li class="c1">/</li>
+            </ul>
+        </div>
+        <div class="row">
+            <ul>
+                <li class="c1 u2">7</li>
+                <li class="c1 u2">8</li>
+                <li class="c1 u2">9</li>
+                <li class="c1 u1">*</li>
+            </ul>
+        </div>
+        <div class="row">
+            <ul>
+                <li class="c1 u2">4</li>
+                <li class="c1 u2">5</li>
+                <li class="c1 u2">6</li>
+                <li class="c1 u1">-</li>
+            </ul>
+        </div>
+        <div class="row">
+            <ul>
+                <li class="c1 u2">1</li>
+                <li class="c1 u2">2</li>
+                <li class="c1 u2">3</li>
+                <li class="c1 u1">+</li>
+            </ul>
+        </div>
+        <div class="row">
+            <ul>
+                <li class="c1 u1">+/_</li>
+                <li class="c1 u2">0</li>
+                <li class="c1 u1">.</li>
+                <li class="c1 u1">=</li>
+            </ul>
+        </div>
+    </div>
+    <script>
+function my$(className) {
+    return document.getElementsByClassName(className);
+}
+var strs = my$("c1");
+var flag = false;
+for (var i = 0; i < strs.length; i++) {
+    strs[i].onclick = function (e) {
+        var str = e.target.innerText;
+        var tmp = my$("screen1")[0].getElementsByTagName("span")[0].innerText;
+        if (str === "=") {
+            var a = calculate(tmp);
+            
+            my$("screen2")[0].getElementsByTagName("span")[0].innerText = a;
+            flag = true;
+        } else if (str === "DEL") {
+            if (flag) {
+                my$("screen1")[0].getElementsByTagName("span")[0].innerText = "";
+                flag = false;
+            } else {
+                tmp = tmp.substring(0, tmp.length - 1);
+                my$("screen1")[0].getElementsByTagName("span")[0].innerText = tmp;
+            }
+        } else if (str === "C" || str === "CE") {
+            if (str === "C" || flag) {
+                my$("screen1")[0].getElementsByTagName("span")[0].innerText = "";
+                my$("screen2")[0].getElementsByTagName("span")[0].innerText = 0;
+                flag = false;
+            } else {
+                my$("screen2")[0].getElementsByTagName("span")[0].innerText = 0;
+            }
+        } else {
+            if (flag) {
+                tmp = my$("screen2")[0].getElementsByTagName("span")[0].innerText;
+                flag = false;
+            }
+            if (tmp === "") {
+                my$("screen1")[0].getElementsByTagName("span")[0].innerText = str;
+            } else {
+                my$("screen1")[0].getElementsByTagName("span")[0].innerText = tmp + str;
+            }
+        }
+    }
+}
+
+//算数算法
+var calculate = function (s) {
+    var stack = new Array();
+    for (var i = 0; i < s.length; i++) {
+        var tmp = s[i];
+        if (tmp >= '0' && tmp <= '9') {
+            var r = getNum(s, i);
+            dealNum(s, stack, r.num);
+            i = r.index;
+        } else if (tmp === '+' || tmp === '-' || tmp === '*' || tmp === '/' || tmp === '(') {
+            stack.push(tmp);
+        } else if (tmp === ')') {
+            dealRight(s, stack);
+        }
+    }
+    return getFinalResult(stack);
+};
+
+var getNum = function (s, i) {
+    var start = i;
+    while (i < s.length && ((s[i] >= '0' && s[i] <= '9') || s[i] === '.')) {
+        i++;
+    }
+    return {
+        num: Number(s.substring(start, i)),
+        index: i - 1
+    };
+};
+
+var dealNum = function (s, stack, num) {
+    if (stack.length !== 0 && (stack[stack.length - 1] === '*' || stack[stack.length - 1] === '/')) {
+        var sign1 = stack.pop();
+        var pre1 = stack.pop();
+        var res = sign1 === '*' ? pre1 * num : pre1 / num;
+        stack.push(res);
+    } else {
+        stack.push(num);
+    }
+}
+
+var dealRight = function (s, stack) {
+    var result = 0;
+    //括号里面只有+/-运算
+    while (stack[stack.length - 1] !== '(') {
+        var next1 = stack.pop();
+        if (stack.length === 0 || stack[stack.length - 1] === '(') {
+            result += next1;
+            break;
+        }
+        var sign2 = stack.pop();
+        result = sign2 === '+' ? result + next1 : result - next1;
+    }
+    stack.pop();
+    var res2 = 0;
+    //使得stack里面只有+/-运算符，保证算法优先级(原因：完成括号运算后的结果必然是一个数字)
+    while (stack.length !== 0 && (stack[stack.length - 1] === '*' || stack[stack.length - 1] === '/')) {
+        var sign3 = stack.pop();
+        var pre2 = stack.pop();
+        res2 = sign3 === '*' ? pre2 * result : pre2 / result;
+        result = res2;
+    }
+    stack.push(result);
+}
+
+var getFinalResult = function (stack) {
+    var result = 0;
+    while (stack.length > 0) {
+        var next = stack.pop();
+        if (stack.length === 0) {
+            return result + next;
+        }
+        var sign = stack.pop();
+        result = sign === '+' ? result + next : result - next;
+    }
+    return result;
+};
+
+    </script>
+</body>
+</html>
